@@ -2,14 +2,16 @@ package Model;
 
 public class InventoryItem extends AbstractItem{
     public int id;
+    public String details;
     public int quantity;
     public String description;
     public boolean isReadyForSell;
 
     public double price;
 
-    public InventoryItem(int id, int quantity, String description) {
+    public InventoryItem(int id, int quantity, String details, String description) {
         this.id = id;
+        this.details = details;
         this.quantity = quantity;
         this.description = description;
         this.isReadyForSell = false;
@@ -33,7 +35,15 @@ public class InventoryItem extends AbstractItem{
 
     @Override
     public String getDetails() {
-        return null;
+        return this.details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -43,7 +53,7 @@ public class InventoryItem extends AbstractItem{
 
     @Override
     public String getDescription() {
-        return null;
+        return this.description;
     }
 
     @Override
@@ -59,6 +69,21 @@ public class InventoryItem extends AbstractItem{
 
     public double getPrice() {
         return this.price;
+    }
+
+    public void view() {
+        System.out.println("==========================================");
+        System.out.println("Id: " + this.getId() + " | Quantity: " + this.getQuantity());
+        System.out.println("Item details: " + this.getDetails());
+        System.out.println("Item description: " + this.getDescription());
+        if (this.isReadyForSell()) {
+            System.out.println("This item is ready for sale and its price is " + this.getPrice() + " лв");
+            System.out.println("==========================================");
+        } else {
+            System.out.println("This item is not ready for sale");
+            System.out.println("==========================================");
+        }
+
     }
 
 }

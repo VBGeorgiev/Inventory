@@ -8,8 +8,8 @@ public class GroceryItem extends InventoryItem implements Categorizable, Perisha
     private String category;
     private boolean isExpired;
 
-    public GroceryItem(int id, int quantity, String description, boolean fresh, String category) {
-        super(id, quantity, description);
+    public GroceryItem(int id, int quantity, String details, String description, boolean fresh, String category) {
+        super(id, quantity, details, description);
         this.isFresh = fresh;
         this.category = category;
         this.isExpired = false;

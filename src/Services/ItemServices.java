@@ -27,7 +27,7 @@ public class ItemServices {
     }
 
     public void addDemoItem() {
-        GroceryItem apple = new GroceryItem(1,5, "Demo apple", true, "fruit");
+        GroceryItem apple = new GroceryItem(1,5, "Demo apple", "Initializing item database", true, "fruit");
         this.itemList.put(1, apple);
     }
 
@@ -40,5 +40,12 @@ public class ItemServices {
             System.out.println("Database created with an initial demo item");
             database.saveObject(this.itemList);
         }
+    }
+
+    public void viewAll() {
+        this.itemList
+                .keySet()
+                .stream()
+                .forEach(key -> this.itemList.get(key).view());
     }
 }

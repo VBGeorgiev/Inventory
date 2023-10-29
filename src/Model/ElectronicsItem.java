@@ -6,8 +6,8 @@ public class ElectronicsItem extends InventoryItem implements Categorizable {
     private int voltage;
     private String category;
 
-    public ElectronicsItem(int id, int quantity, String description, int voltage, String category) {
-        super(id, quantity, description);
+    public ElectronicsItem(int id, int quantity, String details, String description, int voltage, String category) {
+        super(id, quantity, details, description);
         this.voltage = voltage;
         this.category = category;
     }

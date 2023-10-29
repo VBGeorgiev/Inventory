@@ -43,7 +43,7 @@ public class OperationServices {
                 userChoice = Integer.parseInt(sc.nextLine());
                 switch (userChoice) {
                     case 1:
-                        System.out.println("Work in progress 1");
+                        itemServices.viewAll();
                         break;
                     case 2:
                         System.out.println("Work in progress 2");
