@@ -27,12 +27,13 @@ public class OperationServices {
         ArrayList<String> guestMenu = new ArrayList<>();
         System.out.println("======= Welcome to e-commerce shop =======");
         System.out.println("For purchasing items you have to log in or register.");
-        guestMenu.add("View list of all items: select 1");
-        guestMenu.add("Search item by category: select 2");
-        guestMenu.add("Search item by id: select 3");
-        guestMenu.add("Log in user: select 4");
-        guestMenu.add("Register user: select 5");
-        guestMenu.add("Admin services (authorization required): select 6");
+        guestMenu.add("Add an item: select 1");
+        guestMenu.add("View list of all items: select 2");
+        guestMenu.add("Search item by category: select 3");
+        guestMenu.add("Search item by id: select 4");
+        guestMenu.add("Log in user: select 5");
+        guestMenu.add("Register user: select 6");
+        guestMenu.add("Admin services (authorization required): select 7");
         guestMenu.add("Exit: select 0");
         int userChoice = 99;
         while(userChoice != 0 ) {
@@ -43,10 +44,11 @@ public class OperationServices {
                 userChoice = Integer.parseInt(sc.nextLine());
                 switch (userChoice) {
                     case 1:
-                        itemServices.viewAll();
+                        itemServices.add(sc);
+                        itemDatabase.saveObject(itemServices.getItemList());
                         break;
                     case 2:
-                        System.out.println("Work in progress 2");
+                        itemServices.viewAll();
                         break;
                     case 3:
                         System.out.println("Work in progress 3");
@@ -60,11 +62,14 @@ public class OperationServices {
                     case 6:
                         System.out.println("Work in progress 6");
                         break;
+                    case 7:
+                        System.out.println("Work in progress 7");
+                        break;
                     case 0:
                         break;
                     default:
                         userChoice = 99;
-                        System.out.println("Please try again selecting the menu options only");
+                        System.out.println("Please try again selecting from menu options only");
                 }
             } catch (Exception e) {
                 System.out.println(e);
