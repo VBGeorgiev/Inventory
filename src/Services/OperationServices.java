@@ -60,7 +60,9 @@ public class OperationServices {
                         System.out.println("Work in progress 5");
                         break;
                     case 6:
-                        System.out.println("Work in progress 6");
+                        if(userServices.register(sc)) {
+                            userDatabase.saveObject(userServices.getUserList());
+                        }
                         break;
                     case 7:
                         System.out.println("Work in progress 7");

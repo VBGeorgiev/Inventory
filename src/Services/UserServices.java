@@ -6,6 +6,7 @@ import Model.User;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class UserServices {
 //    List of users as: HashMap<username, User>
@@ -29,6 +30,28 @@ public class UserServices {
 
     public void add(User user) {
         this.userList.put(user.getUsername(), user);
+    }
+
+    public boolean register(Scanner sc) {
+        System.out.println("Please enter your username: ");
+        String username = sc.nextLine();
+        if(this.userList.containsKey(username)) {
+            System.out.println("Username already exists, please try again");
+            return false;
+        }
+        System.out.println("Please enter your name: ");
+        String name = sc.nextLine();
+        System.out.println("Please enter your address: ");
+        String address = sc.nextLine();
+        System.out.println("Please enter your phone number: ");
+        String phoneNumber = sc.nextLine();
+        System.out.println("Please enter your password: ");
+        String password = sc.nextLine();
+        User newUser = new User(username, name, address, phoneNumber, password);
+        this.add(newUser);
+        System.out.println("User registration successful");
+        return true;
+
     }
 
     public void uploadUserList(Database database) {
