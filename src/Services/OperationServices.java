@@ -3,6 +3,7 @@ package Services;
 import Constants.Constants;
 import Database.Database;
 import Model.InventoryItem;
+import Model.Order;
 import Model.User;
 
 import java.util.ArrayList;
@@ -13,15 +14,20 @@ public class OperationServices {
     public static void run() {
         String itemListLocation = Constants.databaseLocation + "itemList.txt";
         String userListLocation = Constants.databaseLocation + "userList.txt";
+        String orderListLocation = Constants.databaseLocation + "orderList.txt";
         Database itemDatabase = new Database(itemListLocation);
         Database userDatabase = new Database(userListLocation);
-//        Uploading item and user database
+        Database orderDatabase = new Database(orderListLocation);
+//        Uploading item, user and order database
         ItemServices itemServices = new ItemServices();
         itemServices.uploadItemList(itemDatabase);
         itemServices.setItemList((HashMap<Integer, InventoryItem>) itemDatabase.readObject());
         UserServices userServices = new UserServices();
         userServices.uploadUserList(userDatabase);
         userServices.setUserList((HashMap<String, User>) userDatabase.readObject());
+        OrderServices orderServices = new OrderServices(userServices.getUserList().get("admin"));
+        orderServices.uploadOrderList(orderDatabase, userServices.getUserList().get("admin"));
+        orderServices.setOrderList((HashMap<String, Order>) orderDatabase.readObject());
 //        User Interface
         Scanner sc = new Scanner(System.in);
         ArrayList<String> guestMenu = new ArrayList<>();
@@ -57,7 +63,9 @@ public class OperationServices {
                         System.out.println("Work in progress 4");
                         break;
                     case 5:
-                        System.out.println("Work in progress 5");
+                        if(userServices.logIn(sc, itemServices)) {
+
+                        }
                         break;
                     case 6:
                         if(userServices.register(sc)) {
