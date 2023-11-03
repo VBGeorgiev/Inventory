@@ -64,7 +64,7 @@ public class OperationServices {
                         break;
                     case 5:
                         if(userServices.logIn(sc, itemServices)) {
-
+                            itemDatabase.saveObject(itemServices.getItemList());
                         }
                         break;
                     case 6:

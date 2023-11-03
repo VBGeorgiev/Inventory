@@ -58,7 +58,7 @@ public class UserServices {
     public boolean logIn(Scanner sc, ItemServices itemServices) {
         System.out.println("Please enter your username: ");
         String username = sc.nextLine();
-        if(this.userList.containsKey(username)) {
+        if(!this.userList.containsKey(username)) {
             System.out.println("Username not found, please try again");
             return false;
         }
