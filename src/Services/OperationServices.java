@@ -28,6 +28,8 @@ public class OperationServices {
         OrderServices orderServices = new OrderServices(userServices.getUserList().get("admin"));
         orderServices.uploadOrderList(orderDatabase, userServices.getUserList().get("admin"));
         orderServices.setOrderList((HashMap<String, Order>) orderDatabase.readObject());
+//        Create new AdminService class
+        AdminServices adminService = new AdminServices(itemServices.getItemList(), userServices.getUserList());
 //        User Interface
         Scanner sc = new Scanner(System.in);
         ArrayList<String> guestMenu = new ArrayList<>();
@@ -39,7 +41,7 @@ public class OperationServices {
         guestMenu.add("Search item by id: select 4");
         guestMenu.add("Log in user: select 5");
         guestMenu.add("Register user: select 6");
-        guestMenu.add("Admin services (authorization required): select 7");
+        guestMenu.add("Admin services (credentials: admin, adminPass): select 7");
         guestMenu.add("Exit: select 0");
         int userChoice = 99;
         while(userChoice != 0 ) {
@@ -73,7 +75,10 @@ public class OperationServices {
                         }
                         break;
                     case 7:
-                        System.out.println("Work in progress 7");
+                        if(adminService.logAsAdmin(sc)) {
+                            itemDatabase.saveObject(itemServices.getItemList());
+                            userDatabase.saveObject(userServices.getUserList());
+                        }
                         break;
                     case 0:
                         break;
