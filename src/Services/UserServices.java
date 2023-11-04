@@ -65,9 +65,10 @@ public class UserServices {
             return false;
         }
 
+        User user = this.getUserList().get(username);
         System.out.println("Please enter your password: ");
         String password = sc.nextLine();
-        if(this.userList.get(username).getPassword().equals(password)) {
+        if(user.getPassword().equals(password)) {
             ArrayList<String> userMenu = new ArrayList<>();
             System.out.println("======= Welcome to user menu =======");
             userMenu.add("Add an item: select 1");
@@ -97,11 +98,19 @@ public class UserServices {
                             System.out.println("Work in progress 4");
                             break;
                         case 5:
-                            if(!this.placeOrderById(sc, username, itemServices)) {
-                                System.out.println("Place order not successful");
-                            } else {
-                                System.out.println("Place order successful");
+                            String addItem = "Yes";
+                            Order newOrder = new Order(user, "New purchase");
+                            while(addItem.equals("Yes")){
+                                if(!this.purchaseItemsById(sc, newOrder, itemServices)) {
+                                    System.out.println("Item purchase not successful");
+                                } else {
+                                    System.out.println("Item purchase successful");
+                                }
+                                System.out.println("Add more items (Yes/No): ");
+                                addItem = sc.nextLine();
                             }
+
+                            newOrder.view();
                             break;
                         case 0:
                             break;
@@ -124,7 +133,7 @@ public class UserServices {
 
     }
 
-    public boolean placeOrderById(Scanner sc, String username, ItemServices itemServices) {
+    public boolean purchaseItemsById(Scanner sc, Order newOrder, ItemServices itemServices) {
         int itemId = Utility.selectItemById(sc, itemServices.getItemList());
         if(itemId == -1) {
             return false;
@@ -142,12 +151,7 @@ public class UserServices {
         if(quantity <= currentItemQuantity) {
             int itemQuantityLeft = currentItemQuantity - quantity;
             selectedItem.setQuantity(itemQuantityLeft);
-            HashMap<InventoryItem, Integer> newOrderedItems = new HashMap<>();
-            newOrderedItems.put(selectedItem, quantity);
-            Order newOrder = new Order(this.userList.get(username), "New purchase");
-            newOrder.calcTotalPrice();
-            newOrder.setOrderedItems(newOrderedItems);
-            newOrder.view();
+            newOrder.getOrderedItems().put(selectedItem, quantity);
             return true;
         } else {
             System.out.println("Required item quantity not available");

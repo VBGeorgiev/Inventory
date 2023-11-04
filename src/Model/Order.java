@@ -66,10 +66,13 @@ public class Order implements Serializable {
         System.out.println("Order owner: " + this.owner.getName());
         System.out.println("Owner phone number: " + this.owner.getPhoneNumber());
         System.out.println("Order items: ");
-        this.getOrderedItems().keySet().forEach(item -> {
-            System.out.println("Id: " + item.getId() + " | item: " +
+        this.getOrderedItems()
+                .keySet()
+                .forEach(item -> {
+                    System.out.println("Id: " + item.getId() + " | item: " +
                     item.getDetails() + " | ordered quantity " +
-                    this.getOrderedItems().get(item));
+                    this.getOrderedItems().get(item) + " | price: " +
+                    item.getPrice());
         });
         System.out.println("Total price: " + this.calcTotalPrice());
     }
