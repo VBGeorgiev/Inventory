@@ -2,7 +2,9 @@ package Services;
 
 import Database.Database;
 import Model.InventoryItem;
+import Model.Order;
 import Model.User;
+import Utility.Utility;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -95,7 +97,11 @@ public class UserServices {
                             System.out.println("Work in progress 4");
                             break;
                         case 5:
-                            System.out.println("Work in progress 5");
+                            if(!this.placeOrderById(sc, username, itemServices)) {
+                                System.out.println("Place order not successful");
+                            } else {
+                                System.out.println("Place order successful");
+                            }
                             break;
                         case 0:
                             break;
@@ -118,7 +124,31 @@ public class UserServices {
 
     }
 
-//    public void placeOrder()
+    public boolean placeOrderById(Scanner sc, String username, ItemServices itemServices) {
+        int itemId = Utility.selectItemById(sc, itemServices.getItemList());
+        if(itemId == -1) {
+            return false;
+        }
+
+        InventoryItem selectedItem = itemServices.getItemList().get(itemId);
+        System.out.println("Please select item quantity: ");
+        int quantity = Utility.parseNum(1, sc.nextLine(),
+                "Please enter an integer for item quantity", sc);
+        int currentItemQuantity = selectedItem.getQuantity();
+        if(quantity <= currentItemQuantity) {
+            int itemQuantityLeft = currentItemQuantity - quantity;
+            selectedItem.setQuantity(itemQuantityLeft);
+            ArrayList<InventoryItem> newOrderedItems = new ArrayList<>();
+            newOrderedItems.add(selectedItem);
+            Order newOrder = new Order(this.userList.get(username), "New purchase");
+            newOrder.setOrderedItems(newOrderedItems);
+            return true;
+        } else {
+            System.out.println("Required item quantity not available");
+            return false;
+        }
+
+    }
 
     public void uploadUserList(Database database) {
         String location = database.getPath();

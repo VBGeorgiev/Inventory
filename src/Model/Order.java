@@ -13,7 +13,7 @@ public class Order implements Serializable {
     public Order(User owner, String orderDetails) {
         this.owner = owner;
         this.orderDetails = orderDetails;
-        this.orderReference = this.owner.getUsername() + "--" + this.orderDetails;
+        this.orderReference = this.owner.getUsername() + " --> " + this.orderDetails;
         this.orderedItems = new ArrayList<>();
         this.totalPrice = 0.0;
     }

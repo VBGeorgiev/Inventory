@@ -1,5 +1,8 @@
 package Utility;
 
+import Model.InventoryItem;
+
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Utility {
@@ -27,6 +30,18 @@ public class Utility {
 
         return (T) num;
 
+    }
+
+    public static int selectItemById(Scanner sc, HashMap<Integer, InventoryItem> itemList) {
+        System.out.println("Please select item id: ");
+        int id = Utility.parseNum(1, sc.nextLine(),
+                "Please select an integer for item id", sc);
+        if(!itemList.containsKey(id)) {
+            System.out.println("Selected item id not found");
+            return -1;
+        } else {
+            return id;
+        }
     }
 
 }

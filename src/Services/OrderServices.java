@@ -30,6 +30,10 @@ public class OrderServices {
         this.orderList = orderList;
     }
 
+    public void addOrder(Order order) {
+        this.orderList.put(order.getOrderReference(), order);
+    }
+
     public void uploadOrderList(Database database, User user) {
         String location = database.getPath();
         this.orderList = new HashMap<>();
