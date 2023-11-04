@@ -34,6 +34,13 @@ public class OrderServices {
         this.orderList.put(order.getOrderReference(), order);
     }
 
+    public void view(){
+        this.orderList
+                .keySet()
+                .stream()
+                .forEach(orderRef -> this.orderList.get(orderRef).view());
+    }
+
     public void uploadOrderList(Database database, User user) {
         String location = database.getPath();
         this.orderList = new HashMap<>();

@@ -131,6 +131,10 @@ public class UserServices {
         }
 
         InventoryItem selectedItem = itemServices.getItemList().get(itemId);
+        if(!selectedItem.isReadyForSell) {
+            System.out.println("Selected item not ready for sale");
+            return false;
+        }
         System.out.println("Please select item quantity: ");
         int quantity = Utility.parseNum(1, sc.nextLine(),
                 "Please enter an integer for item quantity", sc);
@@ -138,10 +142,12 @@ public class UserServices {
         if(quantity <= currentItemQuantity) {
             int itemQuantityLeft = currentItemQuantity - quantity;
             selectedItem.setQuantity(itemQuantityLeft);
-            ArrayList<InventoryItem> newOrderedItems = new ArrayList<>();
-            newOrderedItems.add(selectedItem);
+            HashMap<InventoryItem, Integer> newOrderedItems = new HashMap<>();
+            newOrderedItems.put(selectedItem, quantity);
             Order newOrder = new Order(this.userList.get(username), "New purchase");
+            newOrder.calcTotalPrice();
             newOrder.setOrderedItems(newOrderedItems);
+            newOrder.view();
             return true;
         } else {
             System.out.println("Required item quantity not available");

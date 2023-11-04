@@ -2,19 +2,21 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Order implements Serializable {
     private String orderReference;
     private String orderDetails;
     private User owner;
-    private ArrayList<InventoryItem> orderedItems;
+//    HashMap<orderedInventoryItem, orderedQuantity>
+    private HashMap<InventoryItem, Integer> orderedItems;
     private double totalPrice;
 
     public Order(User owner, String orderDetails) {
         this.owner = owner;
         this.orderDetails = orderDetails;
         this.orderReference = this.owner.getUsername() + " --> " + this.orderDetails;
-        this.orderedItems = new ArrayList<>();
+        this.orderedItems = new HashMap<>();
         this.totalPrice = 0.0;
     }
 
@@ -26,16 +28,16 @@ public class Order implements Serializable {
         this.owner = owner;
     }
 
-    public ArrayList<InventoryItem> getOrderedItems() {
+    public HashMap<InventoryItem, Integer> getOrderedItems() {
         return orderedItems;
     }
 
-    public void setOrderedItems(ArrayList<InventoryItem> orderedItems) {
+    public void setOrderedItems(HashMap<InventoryItem, Integer> orderedItems) {
         this.orderedItems = orderedItems;
     }
 
-    public void addItem(InventoryItem inventoryItem) {
-        this.orderedItems.add(inventoryItem);
+    public void addItem(InventoryItem inventoryItem, int quantity) {
+        this.orderedItems.put(inventoryItem, quantity);
     }
 
     public String getOrderDetails() {
@@ -50,9 +52,26 @@ public class Order implements Serializable {
         return orderReference;
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
     public double calcTotalPrice() {
-        this.orderedItems.forEach(item -> this.totalPrice += item.getPrice());
+        this.orderedItems.keySet().forEach(item -> this.totalPrice += item.getPrice() * this.orderedItems.get(item));
         return this.totalPrice;
+    }
+
+    public void view() {
+        System.out.println("Order reference: " + this.orderReference);
+        System.out.println("Order owner: " + this.owner.getName());
+        System.out.println("Owner phone number: " + this.owner.getPhoneNumber());
+        System.out.println("Order items: ");
+        this.getOrderedItems().keySet().forEach(item -> {
+            System.out.println("Id: " + item.getId() + " | item: " +
+                    item.getDetails() + " | ordered quantity " +
+                    this.getOrderedItems().get(item));
+        });
+        System.out.println("Total price: " + this.calcTotalPrice());
     }
 
 }
