@@ -29,7 +29,9 @@ public class OperationServices {
         orderServices.uploadOrderList(orderDatabase, userServices.getUserList().get("admin"));
         orderServices.setOrderList((HashMap<String, Order>) orderDatabase.readObject());
 //        Create new AdminService class
-        AdminServices adminService = new AdminServices(itemServices.getItemList(), userServices.getUserList());
+        AdminServices adminService = new AdminServices(itemServices.getItemList(),
+                userServices.getUserList(),
+                orderServices.getOrderList());
 //        User Interface
         Scanner sc = new Scanner(System.in);
         ArrayList<String> guestMenu = new ArrayList<>();
@@ -65,8 +67,9 @@ public class OperationServices {
                         System.out.println("Work in progress 4");
                         break;
                     case 5:
-                        if(userServices.logIn(sc, itemServices)) {
+                        if(userServices.logIn(sc, itemServices, orderServices)) {
                             itemDatabase.saveObject(itemServices.getItemList());
+                            orderDatabase.saveObject(orderServices.getOrderList());
                         }
                         break;
                     case 6:

@@ -1,6 +1,7 @@
 package Services;
 
 import Model.InventoryItem;
+import Model.Order;
 import Model.User;
 import Utility.Utility;
 
@@ -11,10 +12,14 @@ import java.util.Scanner;
 public class AdminServices {
     private HashMap<Integer, InventoryItem> itemList;
     private HashMap<String, User> userList;
+    private HashMap<String, Order> orderList;
 
-    public AdminServices(HashMap<Integer, InventoryItem> itemList, HashMap<String, User> userList) {
+    public AdminServices(HashMap<Integer, InventoryItem> itemList,
+                         HashMap<String, User> userList,
+                         HashMap<String, Order> orderList) {
         this.itemList = itemList;
         this.userList = userList;
+        this.orderList = orderList;
     }
 
     public boolean logAsAdmin(Scanner sc) {
@@ -31,6 +36,7 @@ public class AdminServices {
             ArrayList<String> adminMenu = new ArrayList<>();
             System.out.println("======= Welcome to administrator menu =======");
             adminMenu.add("Set an item ready for sale: select 1");
+            adminMenu.add("View all purchase orders: select 2");
             adminMenu.add("Exit: select 0");
             int adminChoice = 99;
             while(adminChoice != 0 ) {
@@ -42,6 +48,9 @@ public class AdminServices {
                     switch (adminChoice) {
                         case 1:
                             setItemForSellById(sc);
+                            break;
+                        case 2:
+                            viewOrders();
                             break;
                         case 0:
                             break;
@@ -79,6 +88,16 @@ public class AdminServices {
         this.itemList.get(id).setSellable(price);
         System.out.println("Item ready for sale");
         return true;
+    }
+
+    public void viewOrders(){
+        this.orderList
+                .keySet()
+                .stream()
+                .forEach(orderRef -> {
+                    System.out.println("==========================================");
+                    this.orderList.get(orderRef).view();
+                });
     }
 
 }

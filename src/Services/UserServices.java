@@ -57,7 +57,7 @@ public class UserServices {
 
     }
 
-    public boolean logIn(Scanner sc, ItemServices itemServices) {
+    public boolean logIn(Scanner sc, ItemServices itemServices, OrderServices orderServices) {
         System.out.println("Please enter your username: ");
         String username = sc.nextLine();
         if(!this.userList.containsKey(username)) {
@@ -110,6 +110,7 @@ public class UserServices {
                                 addItem = sc.nextLine();
                             }
 
+                            orderServices.addOrder(newOrder);
                             newOrder.view();
                             break;
                         case 0:
