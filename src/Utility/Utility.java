@@ -5,6 +5,7 @@ import Model.InventoryItem;
 import java.util.HashMap;
 import java.util.Scanner;
 
+// parseNum method validates that user input for type int and double is correct
 public class Utility {
     public static <T extends Number> T parseNum(T outType, String string, String userMessage, Scanner sc) {
         Number num = 0;
@@ -32,6 +33,8 @@ public class Utility {
 
     }
 
+//    selectItemById validate that user id is present in the itemList,
+//    if yes, returns the id but if not, returns -1
     public static int selectItemById(Scanner sc, HashMap<Integer, InventoryItem> itemList) {
         System.out.println("Please select item id: ");
         int id = Utility.parseNum(1, sc.nextLine(),

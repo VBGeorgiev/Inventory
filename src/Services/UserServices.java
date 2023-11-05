@@ -95,7 +95,7 @@ public class UserServices {
                             System.out.println("Work in progress 3");
                             break;
                         case 4:
-                            System.out.println("Work in progress 4");
+                            viewItemById(sc, itemServices);
                             break;
                         case 5:
                             String addItem = "Yes";
@@ -159,6 +159,11 @@ public class UserServices {
             return false;
         }
 
+    }
+
+    public void viewItemById(Scanner sc, ItemServices itemServices) {
+        int id = Utility.selectItemById(sc, itemServices.getItemList());
+        itemServices.getItemList().get(id).view();
     }
 
     public void uploadUserList(Database database) {
